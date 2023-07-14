@@ -51,6 +51,7 @@ $(function () {
         $(this).removeClass('past present').addClass('future')
       }else{
         $(this).removeClass('past future').addClass('present')
+
       }
     });
   }
