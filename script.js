@@ -15,7 +15,7 @@ $(function () {
   
   // Save button function
   function textInput(){
-  $('.saveBtn').on('click', ()=>{
+  $('.saveBtn').on('click', function(){
     let text = $(this).parent().attr('id');
     let input = $(this).siblings('.description').val();
     localStorage.setItem(text,input)
@@ -30,9 +30,19 @@ $(function () {
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
 
+  //passing function to toggleclass 
+  function hourBlock(){
+    $('.time-block').each(function(){
+    let hourly = parseInt(this.id);
+    $(this).toggleClass('future', hourly > currentTime);
+    $(this).toggleClass('present', hourly == currentTime);
+    $(this).toggleClass('past', hourly < currentTime);
+  });
+  }
+
   // Updates classes of timeblocks based on time 
   function updateBlock(){
-    $('.time-block').each(()=>{
+    $('.time-block').each(function(){
       let hourly = parseInt(this.id);
       //conditionals based on time
       if (hourly < currentTime){
@@ -46,14 +56,14 @@ $(function () {
   }
 
   //current time in the form of hours (2 digits)
-  let currentTime = now.format('HH');
+  let currentTime = now.format('H');
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
 
   //Gathers localstorage contents and sets them in description class based on ID
-  $('.time-block').each(()=>{
+  $('.time-block').each(function(){
     let key = $(this).attr('id');
     let input = localStorage.getItem(key);
     $(this).children('.description').val(input)
@@ -63,5 +73,6 @@ $(function () {
 
   //calling functions to run
   textInput();
+  hourBlock();
   updateBlock();
 });
