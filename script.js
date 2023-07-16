@@ -2,7 +2,7 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
-// calling dayjs to be a variable 
+// calling dayjs to be a variable
 let now = dayjs();
 
 $(function () {
@@ -12,17 +12,15 @@ $(function () {
   // function? How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
-  
+
   // Save button function
-  function textInput(){
-  $('.saveBtn').on('click', function(){
-    let text = $(this).parent().attr('id');
-    let input = $(this).siblings('.description').val();
-    localStorage.setItem(text,input)
-  });
+  function textInput() {
+    $(".saveBtn").on("click", function () {
+      let text = $(this).parent().attr("id");
+      let input = $(this).siblings(".description").val();
+      localStorage.setItem(text, input);
+    });
   }
-
-
 
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
@@ -30,47 +28,46 @@ $(function () {
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
 
-  //passing function to toggleclass 
-  function hourBlock(){
-    $('.time-block').each(function(){
-    let hourly = parseInt(this.id);
-    $(this).toggleClass('future', hourly > currentTime);
-    $(this).toggleClass('present', hourly == currentTime);
-    $(this).toggleClass('past', hourly < currentTime);
-  });
+  //passing function to toggleclass
+  function hourBlock() {
+    $(".time-block").each(function () {
+      let hourly = parseInt(this.id);
+      $(this).toggleClass("future", hourly > currentTime);
+      $(this).toggleClass("present", hourly == currentTime);
+      $(this).toggleClass("past", hourly < currentTime);
+    });
   }
 
-  // Updates classes of timeblocks based on time 
-  function updateBlock(){
-    $('.time-block').each(function(){
+  // Updates classes of timeblocks based on time
+  function updateBlock() {
+    $(".time-block").each(function () {
       let hourly = parseInt(this.id);
       //conditionals based on time
-      if (hourly < currentTime){
-        $(this).removeClass('present future').addClass('past')
-      }else if(hourly>currentTime){
-        $(this).removeClass('past present').addClass('future')
-      }else{
-        $(this).removeClass('past future').addClass('present')
-
+      if (hourly < currentTime) {
+        $(this).removeClass("present future").addClass("past");
+      } else if (hourly > currentTime) {
+        $(this).removeClass("past present").addClass("future");
+      } else {
+        $(this).removeClass("past future").addClass("present");
       }
     });
   }
 
   //current time in the form of hours (2 digits)
-  let currentTime = now.format('H');
+  let currentTime = now.format("H");
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
 
   //Gathers localstorage contents and sets them in description class based on ID
-  $('.time-block').each(function(){
-    let key = $(this).attr('id');
+  $(".time-block").each(function () {
+    let key = $(this).attr("id");
     let input = localStorage.getItem(key);
-    $(this).children('.description').val(input)
+    $(this).children(".description").val(input);
   });
   // TODO: Add code to display the current date in the header of the page.
-  $('#currentDay').text(now.format('dddd, MMMM DD'));
+  $("#currentDay").text(now.format("dddd, MMMM DD"));
 
   //calling functions to run
   textInput();
